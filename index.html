@@ -15,7 +15,7 @@ async function diagnose() {
   document.getElementById("result").innerHTML = "診断中...";
 
   try {
-    const res = await fetch("https://ai-diagnose.onrender.com/api/diagnose"), {
+    const res = await fetch("https://ai-diagnose.onrender.com/api/diagnose", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
