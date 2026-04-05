@@ -33,7 +33,7 @@ async function diagnose() {
     formatted += `
       <br><br>
       <div style="text-align:center; margin-top:20px;">
-        <a href="https://www.mofumofu-company.com/contact/" style="
+        <a href="/contact/" style="
           display:inline-block;
           padding:12px 24px;
           background:#f4a62a;
@@ -48,6 +48,7 @@ async function diagnose() {
     `;
 
     document.getElementById("result").innerHTML = formatted;
+
   } catch (err) {
     document.getElementById("result").innerHTML = "通信エラーが発生しました。";
     console.error(err);
