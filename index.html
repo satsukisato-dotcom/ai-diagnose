@@ -1,0 +1,56 @@
+<div style="max-width:600px;margin:40px auto;font-family:sans-serif;">
+  <h2>今の状態を教えてください</h2>
+  <textarea id="input" placeholder="例：ログインできない／メールが届かない／画面が真っ白" style="width:100%;height:80px;padding:10px;"></textarea>
+
+  <button onclick="diagnose()" style="margin-top:10px;padding:10px 20px;background:#f4a62a;color:#fff;border:none;border-radius:6px;">
+    診断する
+  </button>
+
+  <div id="result" style="margin-top:20px;padding:15px;background:#f9f9f9;border-radius:6px;"></div>
+</div>
+
+<script>
+async function diagnose() {
+  const text = document.getElementById("input").value;
+  document.getElementById("result").innerHTML = "診断中...";
+
+  try {
+    const res = await fetch("http://localhost:3000/api/diagnose", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ input: text })
+    });
+
+    const data = await res.json();
+
+    let formatted = data.result
+      .replace(/\n/g, "<br>")
+      .replace(/【(.*?)】/g, "<strong>【$1】</strong><br>")
+      .replace(/---/g, "<hr style='border:none;border-top:1px solid #ddd;margin:16px 0;'>");
+
+    formatted += `
+      <br><br>
+      <div style="text-align:center; margin-top:20px;">
+        <a href="/contact/" style="
+          display:inline-block;
+          padding:12px 24px;
+          background:#f4a62a;
+          color:#fff;
+          border-radius:6px;
+          text-decoration:none;
+          font-weight:bold;
+        ">
+          無料で相談する（30分OK）
+        </a>
+      </div>
+    `;
+
+    document.getElementById("result").innerHTML = formatted;
+  } catch (err) {
+    document.getElementById("result").innerHTML = "通信エラーが発生しました。";
+    console.error(err);
+  }
+}
+</script>
