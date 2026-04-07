@@ -31,9 +31,26 @@ async function diagnose() {
       .replace(/---/g, "<hr style='border:none;border-top:1px solid #ddd;margin:16px 0;'>");
 
     formatted += `
+  <div style="
+    background:#f6e7b0;
+    padding:14px 16px;
+    border-radius:6px;
+    margin-top:20px;
+    color:#5c4a1a;
+    line-height:1.8;
+    font-size:14px;
+  ">
+    ⚠ もし解決しない場合は、<br>
+    設定や内部の問題が影響している可能性があります。<br><br>
+    そのまま操作を続けると、<br>
+    原因が分かりにくくなることもあるため注意が必要です。
+  </div>
+`;
+
+    formatted += `
       <br><br>
       <div style="text-align:center; margin-top:20px;">
-        <a href="/contact/" style="
+        <a href="https://www.mofumofu-company.com/contact/" style="
           display:inline-block;
           padding:12px 24px;
           background:#f4a62a;
@@ -48,7 +65,6 @@ async function diagnose() {
     `;
 
     document.getElementById("result").innerHTML = formatted;
-
   } catch (err) {
     document.getElementById("result").innerHTML = "通信エラーが発生しました。";
     console.error(err);
