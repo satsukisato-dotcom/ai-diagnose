@@ -1,10 +1,34 @@
 const express = require("express");
 const cors = require("cors");
 const fetch = require("node-fetch");
+const rateLimit = require("express-rate-limit"); // 回数制限
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// 回数制限
+const diagnoseLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1分
+  max: 5               // 5回まで
+});
+
+app.use("/api/diagnose", diagnoseLimiter); //回数制限
+
+// BOT対策
+const allowedOrigins = [
+  "https://mofumofu-company.com",
+  "https://ninja-fortune.com"
+];
+
+function isAllowedOrigin(req) {
+  const origin = req.headers.origin;
+  const referer = req.headers.referer;
+
+  return allowedOrigins.some(site =>
+    origin?.startsWith(site) || referer?.startsWith(site)
+  );
+}
 
 app.get("/", (req, res) => {
   res.send("AI diagnose server is running");
