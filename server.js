@@ -34,6 +34,13 @@ app.get("/api/models", async (req, res) => {
 app.post("/api/diagnose", async (req, res) => {
   const text = req.body.input || "";
 
+  // ログ出力
+  console.log("=== REQUEST ===");
+  console.log("Time:", new Date().toISOString());
+  console.log("IP:", req.ip);
+  console.log("User-Agent:", req.headers["user-agent"]);
+  console.log("Input:", text);
+
   try {
     console.log("APIキー先頭:", process.env.ANTHROPIC_API_KEY?.slice(0, 12));
     console.log("送信モデル:", "claude-sonnet-4-6");
