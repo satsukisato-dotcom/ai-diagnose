@@ -37,6 +37,7 @@ app.post("/api/diagnose", async (req, res) => {
   // ログ出力
   console.log("=== REQUEST ===");
   console.log("Time:", new Date().toISOString());
+  console.log("Referer:", req.headers["referer"]);
   console.log("IP:", req.ip);
   console.log("User-Agent:", req.headers["user-agent"]);
   console.log("Input:", text);
